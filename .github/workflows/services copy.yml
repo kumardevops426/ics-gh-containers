@@ -2,7 +2,7 @@ name: Services (Container)
 on:
   push:
     branches:
-      - dev
+      - master
 
 env:
   CACHE_KEY: node-deps
@@ -11,12 +11,12 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
-    container: #node:16
-      image: node:16
+#    container: #node:16
+#      image: node:16
 #      image: mcr.microsoft.com/playwright:v1.25.0-focal
     env:
       MONGODB_CONNECTION_PROTOCOL: mongodb
-      MONGODB_CLUSTER_ADDRESS: mongodb
+      MONGODB_CLUSTER_ADDRESS: 127.0.0.1:27017
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: example
 #      MONGODB_USERNAME: ${{ secrets.MONGODB_USERNAME }}
@@ -25,6 +25,8 @@ jobs:
     services:
       mongodb: 
         image: mongo
+        ports:
+          - 27017:27017
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example   
